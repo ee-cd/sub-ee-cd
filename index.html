@@ -24,11 +24,18 @@
             position: relative;
         }
 
-        /* 语言切换按钮挂在右上角 */
-        .lang-switch-btn {
+        /* 统一管理顶部导航，防止移动端重叠 */
+        .top-nav {
             position: absolute;
             top: 20px;
             right: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .lang-switch-btn {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff;
@@ -36,18 +43,13 @@
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.85rem;
-            z-index: 100;
             transition: background 0.2s;
         }
         .lang-switch-btn:hover {
             background: rgba(255, 255, 255, 0.2);
         }
 
-        /* 右上角全新“注册”按钮样式 */
         .register-top-btn {
-            position: absolute;
-            top: 20px;
-            right: 130px;
             background: linear-gradient(135deg, #ffba5a, #ff9100);
             border: none;
             color: #fff;
@@ -56,7 +58,6 @@
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: 600;
-            z-index: 100;
             text-decoration: none;
             box-shadow: 0 4px 15px rgba(255, 145, 0, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
@@ -72,7 +73,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 30%;
+            height: 30vh;
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23380c64" fill-opacity="0.4" d="M0,224L120,208C240,192,480,160,720,165.3C960,171,1200,213,1320,234.7L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>') no-repeat bottom;
             background-size: cover;
             z-index: 1;
@@ -88,21 +89,6 @@
             align-items: center;
             gap: 20px;
             z-index: 2;
-        }
-
-        @media (max-width: 950px) {
-            .container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .ball-container {
-                justify-content: center !important;
-                height: 400px !important;
-                margin-left: 0 !important;
-            }
-            .features-grid {
-                justify-content: center !important;
-            }
         }
 
         /* 左侧搜索区域 */
@@ -147,7 +133,7 @@
             max-width: 500px;
         }
 
-        /* 新增：特性标签展示组 */
+        /* 特性标签展示组 */
         .features-grid {
             display: flex;
             flex-wrap: wrap;
@@ -199,6 +185,7 @@
             color: #333333;
             padding: 10px 0;
             background: transparent;
+            min-width: 0;
         }
 
         .suffix-select {
@@ -223,6 +210,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
             transition: transform 0.2s;
         }
 
@@ -278,7 +266,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 右侧 动态 3D 旋转球区域 */
+        /* 右侧 动态 3D 旋转球区域容器 */
         .ball-container {
             display: flex;
             justify-content: flex-start;
@@ -288,10 +276,12 @@
             margin-left: -40px;
         }
 
+        /* 旋转球体真正的固定高宽主 div */
         .grav-ball-wrapper {
             position: relative;
             width: 500px;
             height: 500px;
+            flex-shrink: 0;
         }
 
         .domain-node {
@@ -315,11 +305,124 @@
             z-index: 99999 !important;
         }
 
+        /* ==================== 响应式媒体查询适配 ==================== */
+        @media (max-width: 950px) {
+            body {
+                background: linear-gradient(135deg, #2b0854 0%, #491375 50%, #1e053a 100%) fixed;
+            }
+            .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 100px;
+                gap: 40px;
+            }
+            .logo-area {
+                justify-content: center;
+            }
+            .subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            /* 利用 Flex 弹性布局，强行在移动端让包裹球体的 div 水平居中 */
+            .ball-container {
+                width: 100%;
+                margin-left: 0 !important;
+                display: flex !important;
+                justify-content: center !important; 
+                align-items: center !important;
+                overflow: visible;
+                height: 440px !important;
+            }
+            
+            /* 保持完整的 500px 内置坐标系统，但在手机下等比缩小视图，解决算法计算偏差 */
+            .grav-ball-wrapper {
+                transform: scale(0.85);
+                transform-origin: center center;
+            }
+
+            .features-grid {
+                justify-content: center !important;
+            }
+            .quick-suffixes {
+                justify-content: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .result-panel {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .search-group {
+                margin-left: auto;
+                margin-right: auto;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .top-nav {
+                right: 20px;
+                top: 15px;
+                gap: 10px;
+            }
+            .register-top-btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+            .lang-switch-btn {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+            .ball-container {
+                height: 360px !important;
+            }
+            /* 窄屏手机下等比再缩小一些 */
+            .grav-ball-wrapper {
+                transform: scale(0.7);
+            }
+            .bg-wave {
+                height: 20vh;
+            }
+        }
+
+        @media (max-width: 440px) {
+            .logo-text {
+                font-size: 1.8rem;
+            }
+            .search-input-wrapper {
+                padding: 4px 4px 4px 15px;
+            }
+            .search-icon {
+                margin-right: 6px;
+            }
+            .search-input {
+                font-size: 0.95rem;
+            }
+            .suffix-select {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+                margin-right: 5px;
+            }
+            .search-btn {
+                width: 40px;
+                height: 40px;
+            }
+            .ball-container {
+                height: 300px !important;
+            }
+            .grav-ball-wrapper {
+                transform: scale(0.58);
+            }
+        }
     </style>
 </head>
 <body>
-    <a href="https://eecd.cc/" class="register-top-btn" id="regBtn">注册</a>
-    <button class="lang-switch-btn" id="langBtn" onclick="toggleLanguage()">English</button>
+    <div class="top-nav">
+        <a href="https://eecd.cc/" class="register-top-btn" id="regBtn">注册</a>
+        <button class="lang-switch-btn" id="langBtn" onclick="toggleLanguage()">English</button>
+    </div>
+    
     <div class="bg-wave"></div>
 
     <div class="container">
@@ -370,7 +473,7 @@
     </div>
 
     <script>
-        // ==================== 多语言字典字典 ====================
+        // ==================== 多语言字典 ====================
         let currentLang = 'zh';
         const i18n = {
             zh: {
@@ -411,7 +514,6 @@
         const suffixSelect = document.getElementById('suffixSelect');
         const quickPanel = document.getElementById('quickPanel');
 
-        // 初始化左侧下拉框和快捷面板
         baseSuffixes.forEach((sfx, index) => {
             const opt = document.createElement('option');
             opt.value = sfx;
@@ -422,7 +524,6 @@
             const item = document.createElement('div');
             item.className = 'suffix-item';
             item.setAttribute('data-sfx', sfx);
-            // 初始时使用中文价格文本，后面通过多语言刷新
             item.innerHTML = `<span class="suffix-name ${colorClass}">${sfx}</span><span class="suffix-price price-label">首年免费</span>`;
             item.onclick = () => { suffixSelect.value = sfx; triggerSearch(); };
             quickPanel.appendChild(item);
@@ -432,12 +533,10 @@
         const searchBtn = document.getElementById('searchBtn');
         const resultPanel = document.getElementById('resultPanel');
 
-        // 切换语言方法
         function toggleLanguage() {
             currentLang = currentLang === 'zh' ? 'en' : 'zh';
             const dict = i18n[currentLang];
             
-            // 刷新静态文本
             document.getElementById('langBtn').textContent = dict.langBtn;
             document.getElementById('regBtn').textContent = dict.regBtn;
             document.getElementById('transSubtitle').textContent = dict.subtitle;
@@ -446,17 +545,14 @@
             document.getElementById('fSsl').textContent = dict.fSsl;
             domainInput.placeholder = dict.placeholder;
 
-            // 刷新快捷面板里的价格描述
             const priceLabels = document.querySelectorAll('.price-label');
             priceLabels.forEach(label => {
                 label.textContent = dict.priceTag;
             });
 
-            // 清空结果栏以免语境对不上
             resultPanel.style.display = 'none';
         }
 
-        // 核心 API 查询逻辑
         async function triggerSearch() {
             const prefix = domainInput.value.trim().replace(/^[.\s]+|[.\s]+$/g, '');
             const suffix = suffixSelect.value;
@@ -492,10 +588,9 @@
         const ballContainer = document.getElementById('gravityBall');
         
         const DENSITY = 180;          
-        const SPHERE_RADIUS = 200;    
+        const SPHERE_RADIUS = 200;    // 还原原始平滑的 200 像素半径，不再受 resize 干扰
         const FOCAL_LENGTH = 300;     
         
-        // 保持向左旋转的负向参数
         let angleX = 0.003; 
         let angleY = -0.003; 
 
@@ -576,8 +671,9 @@
                 });
             }
 
-            const cx = ballContainer.offsetWidth / 2;
-            const cy = ballContainer.offsetHeight / 2;
+            // 完美的 500px 中心定位核心
+            const cx = 250; 
+            const cy = 250;
 
             domainItems.forEach(item => {
                 const scale = FOCAL_LENGTH / (FOCAL_LENGTH - item.z);
@@ -601,9 +697,8 @@
             requestAnimationFrame(render3DCloud);
         }
 
-        // 默认初始化多语言标签
-        toggleLanguage(); // 执行一次切换至默认中文初始化标签状态
-        currentLang = 'zh'; // 重置语言标定
+        toggleLanguage(); 
+        currentLang = 'zh'; 
 
         render3DCloud();
     </script>
