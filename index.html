@@ -448,6 +448,10 @@
                     <span class="icon" style="color: #ff9100;">🛡️</span>
                     <span id="fSsl">一键自动生成 SSL 证书</span>
                 </div>
+<div class="feature-badge">
+                    <span class="icon" style="color: #00e5ff;">🌐</span>
+                    <span id="fDdns">支持 DDNS 动态域名解析</span>
+                </div>
             </div>
 
             <div class="search-group">
@@ -480,9 +484,10 @@
                 langBtn: "English",
                 regBtn: "注册",
                 subtitle: "优质域名后缀正在变得越来越稀缺。ee.cd 为您提供自由注册心仪域名的无限可能，助您快速锁定专属的互联网黄金资产。",
-                fFree: "首年免费注册",
-                fStudent: "学生扶持计划 (教育邮箱优惠)",
+                fFree: "每天永久域名抽奖",
+                fStudent: "学生扶持计划 (免费六年)",
                 fSsl: "一键生成 SSL 证书",
+                fDdns: "支持 DDNS 动态域名解析",
                 placeholder: "请输入你要查询的前缀，例如: myname",
                 alertEmpty: "请先输入域名主体前缀！",
                 loading: "正在查询 {domain} 的注册状态，请稍候...",
@@ -495,9 +500,10 @@
                 langBtn: "简体中文",
                 regBtn: "Register",
                 subtitle: "Premium domain extensions are becoming increasingly scarce. ee.cd offers you unlimited possibilities to register your desired domains and lock down your digital assets.",
-                fFree: "Free for the First Year",
-                fStudent: "Student Support (Edu Email Discount)",
+                fFree: "Daily permanent domain name lottery",
+                fStudent: "Student Support Program (6 Years Free)",
                 fSsl: "1-Click Free SSL Generation",
+                fDdns: "Supports DDNS dynamic domain name resolution",
                 placeholder: "Enter domain prefix, e.g. myname",
                 alertEmpty: "Please enter a domain prefix first!",
                 loading: "Checking availability for {domain}, please wait...",
@@ -543,6 +549,7 @@
             document.getElementById('fFree').textContent = dict.fFree;
             document.getElementById('fStudent').textContent = dict.fStudent;
             document.getElementById('fSsl').textContent = dict.fSsl;
+            document.getElementById('fDdns').textContent = dict.fDdns;
             domainInput.placeholder = dict.placeholder;
 
             const priceLabels = document.querySelectorAll('.price-label');
